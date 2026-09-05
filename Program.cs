@@ -18,17 +18,16 @@ namespace ExpiredFood
 
     class Stew
     {
-
-        public string Name { get; private set; }
-        public int ShelfLifeYears { get; private set; }
-        public int ProductionYear { get; private set; }
-
         public Stew(string name, int shelfLifeYears, int productionYear)
         {
             Name = name;
             ShelfLifeYears = shelfLifeYears;
             ProductionYear = productionYear;
         }
+
+        public string Name { get; private set; }
+        public int ShelfLifeYears { get; private set; }
+        public int ProductionYear { get; private set; }
 
         public bool IsExpired()
         {
@@ -42,11 +41,11 @@ namespace ExpiredFood
         private const int ShowExpiredStewsCommand = 2;
         private const int ExitCommand = 3;
 
-        StewStorage _storage;
+        private StewStorage _storage;
+
         public StewMenu()
         {
             _storage = new StewStorage();
-
         }
 
         public void Run()
@@ -54,7 +53,6 @@ namespace ExpiredFood
             bool isRunning = true;
             while (isRunning)
             {
-
                 Menubar();
 
                 string input = Console.ReadLine();
@@ -63,12 +61,11 @@ namespace ExpiredFood
                     switch (command)
                     {
                         case ShowAllStewsCommand:
-                              _storage.ShowAllStews();
+                            _storage.ShowAllStews();
                             break;
                         case ShowExpiredStewsCommand:
                             var expiredStews = _storage.FindExpiredStews();
                             _storage.ShowStews(expiredStews);
-
                             break;
                         case ExitCommand:
                             isRunning = false;
@@ -82,7 +79,6 @@ namespace ExpiredFood
                 {
                     Console.WriteLine("Неверный ввод. Пожалуйста, введите число.");
                 }
-
             }
         }
 
@@ -109,7 +105,6 @@ namespace ExpiredFood
         private List<Stew> _stews;
         private StewFactory _factory;
 
-
         public StewStorage()
         {
             _factory = new StewFactory();
@@ -133,8 +128,8 @@ namespace ExpiredFood
 
         public List<Stew> FindExpiredStews()
         {
-            var expired= _stews.Where(stew => stew.IsExpired()).ToList();
-            _stews=_stews.Where(normal=> !normal.IsExpired()).ToList();
+            var expired = _stews.Where(stew => stew.IsExpired()).ToList();
+            _stews = _stews.Where(normal => !normal.IsExpired()).ToList();
             return expired;
         }
 
